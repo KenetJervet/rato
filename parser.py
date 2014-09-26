@@ -1,45 +1,3 @@
-from abc import ABCMeta, abstractmethod
-import re
-
-
-class Parser:
-    @abstractmethod
-    def parse(self, s):
-        raise NotImplementedError()
-
-
-class Result:
-    def __init__(self, recognized, remaining, succeeded):
-        self._recognized = recognized
-        self._remaining = remaining
-        self._succeeded = succeeded
-
-    @property
-    def recognized(self):
-        return self._recognized
-
-    @property
-    def remaining(self):
-        return self._remaining
-
-    @property
-    def succeeded(self):
-        return self._succeeded
-
-    @classmethod
-    def succeed(cls, recognized, remaining):
-        return Result(recognized, remaining, True)
-
-    @classmethod
-    def fail(cls):
-        return Result('', '', False)
-
-
-class Nil(Parser):
-    def parse(self, s):
-        return Result.succeed('', s)
-
-
 class Atom(Parser):
     def parse(self, s):
         return \
@@ -79,9 +37,17 @@ class Num(SAT):
     parser = Atom()
 
 
-class Char(SAT):
+class Alpha(SAT):
     predicate = RegexPredicate('[A-Za-z]')
     parser = Atom()
+
+
+class Underscore(SAT):
+    predicate = RegexPredicate('_')
+    parser = Atom()
+
+
+
 
 
 class And(Parser):
