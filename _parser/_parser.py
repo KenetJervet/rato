@@ -10,7 +10,10 @@ class ParserMeta(ABCMeta):
                 cls._singleton.__init__(*args, **kwargs)
             return cls._singleton
 
-        return super().__call__(*args, **kwargs)
+        else:
+            instance = cls.__new__(cls, *args, **kwargs)
+            instance.__init__(*args, **kwargs)
+            return instance
 
 
 class Parser(metaclass=ParserMeta):

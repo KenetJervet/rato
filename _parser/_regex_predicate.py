@@ -3,8 +3,12 @@ from ._predicate import Predicate
 
 
 class RegexPredicate(Predicate):
-    def __init__(self, regex):
-        self.regex = re.compile(regex)
+    regex = None
+
+    def __init__(self, regex=None):
+        if regex:
+            self.regex = regex
+        self.regex = re.compile(self.regex)
 
     def __call__(self, s):
         # Returns only True or False

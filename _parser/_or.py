@@ -2,8 +2,13 @@ from ._parser import Parser, Result
 
 
 class Or(Parser):
-    def __init__(self, p1, p2):
-        self.p1, self.p2 = p1, p2
+    p1 = p2 = None
+
+    def __init__(self, p1=None, p2=None):
+        if p1:
+            self.p1 = p1
+        if p2:
+            self.p2 = p2
 
     def parse(self, s):
         res_left = self.p1.parse(s)
